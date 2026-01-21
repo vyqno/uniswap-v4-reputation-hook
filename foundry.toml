@@ -1,0 +1,88 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+solc = "0.8.26"
+evm_version = "cancun"
+
+# Optimizer settings for production
+optimizer = true
+optimizer_runs = 1000000
+via_ir = true  # Required for complex scripts to avoid stack too deep
+
+# Test configuration
+verbosity = 3
+fuzz = { runs = 1000 }
+invariant = { runs = 256, depth = 15 }
+
+# Note: Coverage is generated with forge coverage command, not a toml option
+
+# Gas reporting
+gas_reports = ["*"]
+
+# FFI for devops scripts
+ffi = true
+
+# Filesystem permissions for JSON output
+fs_permissions = [
+    { access = "read-write", path = "./deployments" },
+    { access = "read", path = "./broadcast" },
+    { access = "read", path = "./out" }
+]
+
+# Remappings
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "@uniswap/v4-core/=lib/v4-core/",
+    "@uniswap/v4-periphery/=lib/v4-periphery/",
+    "forge-std/=lib/forge-std/src/",
+    "foundry-devops/=lib/foundry-devops/src/"
+]
+
+# ============ RPC Endpoints ============
+[rpc_endpoints]
+# Local
+localhost = "http://127.0.0.1:8545"
+anvil = "http://127.0.0.1:8545"
+
+# Testnets
+sepolia = "${SEPOLIA_RPC_URL}"
+base_sepolia = "${BASE_SEPOLIA_RPC_URL}"
+polygon_amoy = "${POLYGON_AMOY_RPC_URL}"
+arbitrum_sepolia = "${ARBITRUM_SEPOLIA_RPC_URL}"
+
+# Mainnets
+mainnet = "${MAINNET_RPC_URL}"
+base = "${BASE_RPC_URL}"
+polygon = "${POLYGON_RPC_URL}"
+arbitrum = "${ARBITRUM_RPC_URL}"
+
+# ============ Etherscan/Block Explorer Verification ============
+[etherscan]
+# Ethereum
+mainnet = { key = "${ETHERSCAN_API_KEY}", chain = 1, url = "https://api.etherscan.io/api" }
+sepolia = { key = "${ETHERSCAN_API_KEY}", chain = 11155111, url = "https://api-sepolia.etherscan.io/api" }
+
+# Base
+base = { key = "${BASESCAN_API_KEY}", chain = 8453, url = "https://api.basescan.org/api" }
+base_sepolia = { key = "${BASESCAN_API_KEY}", chain = 84532, url = "https://api-sepolia.basescan.org/api" }
+
+# Polygon
+polygon = { key = "${POLYGONSCAN_API_KEY}", chain = 137, url = "https://api.polygonscan.com/api" }
+polygon_amoy = { key = "${POLYGONSCAN_API_KEY}", chain = 80002, url = "https://api-amoy.polygonscan.com/api" }
+
+# Arbitrum
+arbitrum = { key = "${ARBISCAN_API_KEY}", chain = 42161, url = "https://api.arbiscan.io/api" }
+arbitrum_sepolia = { key = "${ARBISCAN_API_KEY}", chain = 421614, url = "https://api-sepolia.arbiscan.io/api" }
+
+# ============ Profile: CI/CD ============
+[profile.ci]
+fuzz = { runs = 500 }
+invariant = { runs = 100, depth = 10 }
+verbosity = 2
+
+# ============ Profile: Production (for mainnet deployments) ============
+[profile.production]
+optimizer = true
+optimizer_runs = 1000000
+via_ir = true  # Enable IR pipeline for better optimization

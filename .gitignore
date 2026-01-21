@@ -1,0 +1,30 @@
+# Compiler files
+cache/
+out/
+
+# Safe ignored files
+.DS_Store
+.idea/
+.vscode/
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Broadcast logs (keep deployments, ignore local tests)
+/broadcast
+!/broadcast/11155111/
+!/broadcast/84532/
+!/broadcast/421614/
+
+# Environment variables
+.env
+.env.local
+
+# Local Anvil chain data
+anvil_state.json
+
+# Helper scripts output
+deployments/
+docs/
+.claude/
+

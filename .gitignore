@@ -27,4 +27,5 @@ anvil_state.json
 deployments/
 docs/
 .claude/
+frontend/
 

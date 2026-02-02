@@ -181,7 +181,7 @@ function ServicesSection() {
         {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Card 01 - New Traders */}
-          <div className="reveal">
+          <Link to="/register" className="reveal">
             <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[400px] flex flex-col hover:border-foreground-tertiary transition-all duration-500">
               {/* Card Header */}
               <div className="flex items-center justify-between mb-auto">
@@ -210,12 +210,10 @@ function ServicesSection() {
                 <ArrowUpRight className="w-6 h-6 text-foreground-tertiary" />
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Card 02 - Loyal Holders */}
-          <div className="reveal" style={{
-          transitionDelay: "100ms"
-        }}>
+          <Link to="/register" className="reveal" style={{ transitionDelay: "100ms" }}>
             <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[400px] flex flex-col hover:border-foreground-tertiary transition-all duration-500">
               {/* Card Header */}
               <div className="flex items-center justify-between mb-auto">
@@ -244,7 +242,7 @@ function ServicesSection() {
                 <ArrowUpRight className="w-6 h-6 text-foreground-tertiary" />
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>;

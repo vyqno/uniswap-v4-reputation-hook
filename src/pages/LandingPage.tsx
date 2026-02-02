@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import handLeftGreen from "@/assets/hand-left-green.png";
 import handRightGreen from "@/assets/hand-right-green.png";
+import { useTransparentPng } from "@/hooks/useTransparentPng";
 
 // Reveal animation hook
 function useRevealAnimation() {
@@ -78,6 +79,9 @@ function Header() {
 
 // Hero Section - Exact structure from HTML
 function HeroSection() {
+  const handLeftClean = useTransparentPng(handLeftGreen);
+  const handRightClean = useTransparentPng(handRightGreen);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Atmospheric Fog Background */}
@@ -90,9 +94,9 @@ function HeroSection() {
       {/* Floating Hand Image - Left */}
       <div className="absolute left-[-5%] top-[10%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
         <img
-          src={handLeftGreen}
+          src={handLeftClean}
           alt=""
-          className="w-full h-auto mix-blend-multiply"
+          className="w-full h-auto"
           style={{ 
             transform: "rotate(-6deg)",
             filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
@@ -103,9 +107,9 @@ function HeroSection() {
       {/* Floating Hand Image - Right */}
       <div className="absolute right-[-5%] bottom-[5%] w-[30%] max-w-[350px] animate-float-right pointer-events-none hidden lg:block">
         <img
-          src={handRightGreen}
+          src={handRightClean}
           alt=""
-          className="w-full h-auto mix-blend-multiply"
+          className="w-full h-auto"
           style={{ 
             transform: "rotate(6deg) scaleX(-1)",
             filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"

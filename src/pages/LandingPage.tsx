@@ -27,7 +27,7 @@ function useRevealAnimation() {
   return ref;
 }
 
-// Header/Navigation
+// Header/Navigation - Exact structure
 function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md">
@@ -78,34 +78,35 @@ function Header() {
 function HeroSection() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Floating Images - Left */}
-      <div className="absolute left-[-10%] top-[15%] w-[35%] max-w-[400px] opacity-80 animate-float-left pointer-events-none hidden lg:block">
+      {/* Floating Hand Image - Left */}
+      <div className="absolute left-[-10%] top-[15%] w-[35%] max-w-[400px] opacity-80 animate-float-left pointer-events-none hidden lg:block parallax-card-up">
         <img
           src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=500&fit=crop&crop=center"
-          alt="Decorative"
+          alt=""
           className="w-full h-auto rounded-2xl shadow-2xl"
           style={{ transform: "rotate(-6deg)" }}
         />
       </div>
 
-      {/* Floating Images - Right */}
-      <div className="absolute right-[-10%] bottom-[10%] w-[35%] max-w-[400px] opacity-80 animate-float-right pointer-events-none hidden lg:block">
+      {/* Floating Hand Image - Right */}
+      <div className="absolute right-[-10%] bottom-[10%] w-[35%] max-w-[400px] opacity-80 animate-float-right pointer-events-none hidden lg:block parallax-card-down">
         <img
           src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=500&fit=crop&crop=center"
-          alt="Decorative"
+          alt=""
           className="w-full h-auto rounded-2xl shadow-2xl"
           style={{ transform: "rotate(6deg)" }}
         />
       </div>
 
-      {/* Content */}
+      {/* Content Container */}
       <div className="relative z-10 mx-auto max-w-5xl px-6 lg:px-8 py-32 text-center">
-        {/* Main Heading */}
-        <div className="reveal active mb-6">
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[0.95]">
-            <span className="text-foreground">Reputation Hook.</span>
-            <br />
-            <span className="text-foreground-secondary font-serif italic font-normal">
+        {/* Main Title */}
+        <div className="reveal active mb-8">
+          <h1 className="mb-4">
+            <span className="block font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tight text-foreground">
+              Reputation Hook.
+            </span>
+            <span className="block font-serif italic text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-foreground-secondary mt-2">
               The loyalty layer.
             </span>
           </h1>
@@ -120,16 +121,21 @@ function HeroSection() {
 
         {/* CTA Row */}
         <div className="reveal active flex flex-col sm:flex-row items-center justify-center gap-6">
+          {/* Button */}
           <Link to="/register">
             <button className="group inline-flex items-center gap-3 px-8 py-4 text-base font-medium text-background bg-foreground rounded-full hover:bg-foreground/90 transition-all duration-300">
-              <span className="w-2 h-2 rounded-full bg-brand-500 animate-pulse" />
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+              </span>
               <span>Enter the Void</span>
             </button>
           </Link>
 
-          <div className="flex items-center gap-4 text-sm text-foreground-tertiary">
+          {/* Info */}
+          <div className="flex items-center gap-3 text-sm text-foreground-tertiary">
             <span>0.001 ETH</span>
-            <span className="w-1 h-1 rounded-full bg-foreground-muted" />
+            <span className="w-1 h-1 rounded-full bg-foreground-muted"></span>
             <span>Uniswap V4</span>
           </div>
         </div>
@@ -146,7 +152,7 @@ function PhilosophySection() {
     <section className="py-24 lg:py-32 border-t border-border" ref={containerRef}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          {/* Left - Quote */}
+          {/* Left Column - Quote */}
           <div className="reveal">
             <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground leading-snug mb-6">
               We turn the unseen into the unforgettable. A Uniswap V4 hook for those who value long-term commitment.
@@ -156,12 +162,12 @@ function PhilosophySection() {
             </p>
           </div>
 
-          {/* Right - Brand Logos */}
+          {/* Right Column - Brand Logos */}
           <div className="reveal flex flex-wrap items-center justify-start lg:justify-end gap-x-12 gap-y-4">
-            <span className="text-xl font-display tracking-[0.2em] text-foreground-muted">UNISWAP</span>
-            <span className="text-xl font-display tracking-[0.2em] text-foreground-muted">ETHEREUM</span>
-            <span className="text-xl font-display tracking-[0.2em] text-foreground-muted">DEFI</span>
-            <span className="text-xl font-display tracking-[0.2em] text-foreground-muted">WEB3</span>
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">UNISWAP</p>
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">ETHEREUM</p>
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">DEFI</p>
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">WEB3</p>
           </div>
         </div>
       </div>
@@ -169,14 +175,14 @@ function PhilosophySection() {
   );
 }
 
-// Services Section - Exact structure from HTML with 2 cards
+// Services Section - Exact structure from HTML
 function ServicesSection() {
   const containerRef = useRevealAnimation();
 
   return (
     <section className="py-24 lg:py-32 border-t border-border" id="tiers" ref={containerRef}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Section Title */}
         <div className="reveal mb-16">
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-foreground leading-tight">
             Define your{" "}
@@ -186,66 +192,66 @@ function ServicesSection() {
           </h2>
         </div>
 
-        {/* Cards Grid - 2 columns like original */}
+        {/* Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Card 1 - Emerging Talent / New Traders */}
+          {/* Card 01 - New Traders */}
           <div className="reveal">
-            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 h-full hover:border-foreground-tertiary transition-all duration-500">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-12">
+            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[400px] flex flex-col hover:border-foreground-tertiary transition-all duration-500">
+              {/* Card Header */}
+              <div className="flex items-center justify-between mb-auto">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-foreground/5 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-foreground-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    <svg className="w-5 h-5 text-foreground-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
                     </svg>
                   </div>
                   <span className="text-foreground-muted text-sm font-mono">01</span>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="space-y-4">
-                <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground leading-tight">
+              {/* Card Content */}
+              <div className="mt-auto">
+                <h3 className="font-display text-4xl sm:text-5xl font-semibold text-foreground leading-none mb-4">
                   New<br />Traders
                 </h3>
-                <p className="text-foreground-secondary text-base leading-relaxed max-w-sm">
+                <p className="text-foreground-secondary text-base leading-relaxed max-w-xs">
                   You have the spark. We provide the atmosphere for it to ignite into a blazing reality.
                 </p>
               </div>
 
-              {/* Arrow */}
+              {/* Hover Arrow */}
               <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <ArrowUpRight className="w-6 h-6 text-foreground-tertiary" />
               </div>
             </div>
           </div>
 
-          {/* Card 2 - Evolving Legacy / Loyal Holders */}
+          {/* Card 02 - Loyal Holders */}
           <div className="reveal" style={{ transitionDelay: "100ms" }}>
-            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 h-full hover:border-foreground-tertiary transition-all duration-500">
-              {/* Header */}
-              <div className="flex items-center justify-between mb-12">
+            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[400px] flex flex-col hover:border-foreground-tertiary transition-all duration-500">
+              {/* Card Header */}
+              <div className="flex items-center justify-between mb-auto">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-full bg-foreground/5 flex items-center justify-center">
-                    <svg className="w-5 h-5 text-foreground-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    <svg className="w-5 h-5 text-foreground-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                     </svg>
                   </div>
                   <span className="text-foreground-muted text-sm font-mono">02</span>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="space-y-4">
-                <h3 className="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-foreground leading-tight">
+              {/* Card Content */}
+              <div className="mt-auto">
+                <h3 className="font-display text-4xl sm:text-5xl font-semibold text-foreground leading-none mb-4">
                   Loyal<br />Holders
                 </h3>
-                <p className="text-foreground-secondary text-base leading-relaxed max-w-sm">
+                <p className="text-foreground-secondary text-base leading-relaxed max-w-xs">
                   You've arrived. Now let's make sure you never leave their minds. Permanence is our craft.
                 </p>
               </div>
 
-              {/* Arrow */}
+              {/* Hover Arrow */}
               <div className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <ArrowUpRight className="w-6 h-6 text-foreground-tertiary" />
               </div>
@@ -265,15 +271,16 @@ function Footer() {
     <footer className="py-16 lg:py-24 border-t border-border">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12">
-          {/* Large Logo */}
+          {/* Large Logo Text */}
           <div className="reveal active">
-            <span className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight leading-none">
-              REPUTATION<br className="hidden sm:block" /> HOOK.
-            </span>
+            <h2 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight leading-none">
+              REPUTATION HOOK.
+            </h2>
           </div>
 
           {/* Links & Copyright */}
           <div className="flex flex-col items-start lg:items-end gap-6">
+            {/* Social Links */}
             <div className="flex items-center gap-8 text-sm text-foreground-secondary">
               <a
                 href="https://twitter.com/uniswap"
@@ -300,6 +307,8 @@ function Footer() {
                 GitHub
               </a>
             </div>
+
+            {/* Copyright */}
             <p className="text-sm text-foreground-muted">
               © {currentYear} Reputation Hook. All rights reserved.
             </p>
@@ -314,7 +323,7 @@ function Footer() {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      {/* Noise Overlay */}
+      {/* Noise Texture Overlay */}
       <div className="noise-overlay" />
 
       {/* Header */}

@@ -250,6 +250,43 @@ function ServicesSection() {
     </section>;
 }
 
+// Footer - Exact structure from HTML
+function Footer() {
+  const currentYear = new Date().getFullYear();
+  return <footer className="py-16 lg:py-24 border-t border-border">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12">
+          {/* Large Logo Text */}
+          <div className="reveal active">
+            <h2 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight leading-none">
+              REPUTATION HOOK.
+            </h2>
+          </div>
+
+          {/* Links & Copyright */}
+          <div className="flex flex-col items-start lg:items-end gap-6">
+            {/* Social Links */}
+            <div className="flex items-center gap-8 text-sm text-foreground-secondary">
+              <a href="https://twitter.com/uniswap" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-300">
+                Twitter
+              </a>
+              <a href="https://discord.gg/uniswap" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-300">
+                Discord
+              </a>
+              <a href="https://github.com/uniswap" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-300">
+                GitHub
+              </a>
+            </div>
+
+            {/* Copyright */}
+            <p className="text-sm text-foreground-muted">
+              © {currentYear} Reputation Hook. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>;
+}
 
 // Main Landing Page
 export default function LandingPage() {
@@ -267,5 +304,7 @@ export default function LandingPage() {
         <ServicesSection />
       </main>
 
+      {/* Footer */}
+      <Footer />
     </div>;
 }

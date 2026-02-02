@@ -60,11 +60,11 @@ export function AppSidebar({ className }: AppSidebarProps) {
               className={cn(
                 "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-brand-500/10 text-brand-500"
-                  : "text-foreground-secondary hover:bg-white/5 hover:text-foreground"
+                  ? "bg-brand-500/10 text-brand-600"
+                  : "text-foreground-secondary hover:bg-background-secondary hover:text-foreground"
               )}
             >
-              <link.icon className={cn("h-5 w-5 flex-shrink-0", isActive && "text-brand-500")} />
+              <link.icon className={cn("h-5 w-5 flex-shrink-0", isActive && "text-brand-600")} />
               {!collapsed && (
                 <motion.span
                   initial={{ opacity: 0 }}
@@ -77,7 +77,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
               {isActive && !collapsed && (
                 <motion.div
                   layoutId="sidebar-active"
-                  className="absolute left-0 h-8 w-1 rounded-r-full bg-brand-500"
+                  className="absolute left-0 h-8 w-1 rounded-r-full bg-brand-600"
                 />
               )}
             </Link>
@@ -88,10 +88,10 @@ export function AppSidebar({ className }: AppSidebarProps) {
       {/* Wallet Section */}
       <div className="border-t border-border p-4">
         {!collapsed ? (
-          <div className="rounded-xl bg-white/5 p-4">
+          <div className="rounded-xl bg-background-secondary border border-border p-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500/20">
-                <Wallet className="h-5 w-5 text-brand-500" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500/15">
+                <Wallet className="h-5 w-5 text-brand-600" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-foreground truncate">
@@ -105,8 +105,8 @@ export function AppSidebar({ className }: AppSidebarProps) {
           </div>
         ) : (
           <div className="flex justify-center">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500/20">
-              <Wallet className="h-5 w-5 text-brand-500" />
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500/15">
+              <Wallet className="h-5 w-5 text-brand-600" />
             </div>
           </div>
         )}
@@ -115,7 +115,7 @@ export function AppSidebar({ className }: AppSidebarProps) {
       {/* Collapse Button */}
       <button
         onClick={() => setCollapsed(!collapsed)}
-        className="absolute -right-3 top-24 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-background-secondary text-foreground-secondary hover:text-foreground transition-colors"
+        className="absolute -right-3 top-24 flex h-6 w-6 items-center justify-center rounded-full border border-border bg-card text-foreground-secondary hover:text-foreground transition-colors shadow-md"
       >
         {collapsed ? (
           <ChevronRight className="h-3 w-3" />

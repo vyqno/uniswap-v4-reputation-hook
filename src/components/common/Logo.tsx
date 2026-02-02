@@ -69,14 +69,14 @@ export const Logo = React.forwardRef<HTMLDivElement, LogoProps>(
                 y2="40"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stopColor="hsl(45, 100%, 60%)" />
-                <stop offset="1" stopColor="hsl(38, 92%, 48%)" />
-              </linearGradient>
-            </defs>
-          </svg>
-          
-          {/* Glow effect */}
-          <div className="absolute inset-0 rounded-full bg-brand-500/20 blur-md -z-10" />
+              <stop stopColor="hsl(160, 84%, 45%)" />
+              <stop offset="1" stopColor="hsl(163, 94%, 30%)" />
+            </linearGradient>
+          </defs>
+        </svg>
+        
+        {/* Glow effect */}
+        <div className="absolute inset-0 rounded-full bg-brand-500/15 blur-md -z-10" />
         </div>
 
         {showText && (

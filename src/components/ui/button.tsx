@@ -10,25 +10,25 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/25",
+          "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md shadow-primary/20",
         brand:
-          "bg-gradient-to-r from-brand-500 to-brand-600 text-primary-foreground hover:from-brand-400 hover:to-brand-500 shadow-lg shadow-brand-500/30 btn-glow",
+          "bg-gradient-to-r from-brand-500 to-brand-600 text-white hover:from-brand-400 hover:to-brand-500 shadow-lg shadow-brand-600/25 btn-glow",
         secondary:
-          "bg-white/10 text-foreground hover:bg-white/20 border border-white/10 hover:border-white/20",
+          "bg-background-secondary text-foreground hover:bg-background-tertiary border border-border",
         outline:
-          "border-2 border-brand-500 text-brand-500 hover:bg-brand-500 hover:text-primary-foreground",
+          "border-2 border-brand-500 text-brand-600 hover:bg-brand-500 hover:text-white",
         ghost:
-          "text-foreground-secondary hover:text-foreground hover:bg-white/5",
+          "text-foreground-secondary hover:text-foreground hover:bg-background-secondary",
         link:
-          "text-brand-500 underline-offset-4 hover:underline",
+          "text-brand-600 underline-offset-4 hover:underline",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         success:
           "bg-success text-success-foreground hover:bg-success/90",
         hero:
-          "bg-gradient-to-r from-brand-400 via-brand-500 to-brand-600 text-primary-foreground font-bold shadow-xl shadow-brand-500/40 hover:shadow-brand-500/60 hover:scale-[1.02] active:scale-[0.98] animate-gradient",
+          "bg-gradient-to-r from-brand-500 via-brand-600 to-brand-700 text-white font-bold shadow-xl shadow-brand-600/30 hover:shadow-brand-600/50 hover:scale-[1.02] active:scale-[0.98]",
         glass:
-          "glass text-foreground hover:bg-white/10",
+          "bg-card border border-border text-foreground hover:bg-background-secondary shadow-sm",
       },
       size: {
         default: "h-11 px-6 py-2",

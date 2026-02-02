@@ -19,15 +19,31 @@ import { TierBadge } from "@/components/common/TierBadge";
 import { REGISTRATION_BOND, TIMING, TIERS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
-type RegistrationStep = "info" | "confirm" | "pending" | "success";
+type RegistrationStep = "connect" | "info" | "confirm" | "pending" | "success";
 
 export default function RegisterPage() {
-  const [step, setStep] = useState<RegistrationStep>("info");
+  const [step, setStep] = useState<RegistrationStep>("connect");
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
+  const [walletBalance, setWalletBalance] = useState<string>("0 ETH");
 
-  // Mock wallet data
-  const walletAddress = "0x1234...5678";
-  const walletBalance = "1.234 ETH";
+  const handleConnectWallet = async () => {
+    setIsConnecting(true);
+    // Simulate wallet connection (demo mode)
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    // Generate a random demo wallet address
+    const randomAddr = "0x" + Array.from({ length: 40 }, () => 
+      Math.floor(Math.random() * 16).toString(16)
+    ).join("");
+    const shortAddr = `${randomAddr.slice(0, 6)}...${randomAddr.slice(-4)}`;
+    
+    setWalletAddress(shortAddr);
+    setWalletBalance("1.234 ETH");
+    setIsConnecting(false);
+    setStep("info");
+  };
 
   const handleRegister = () => {
     setStep("pending");
@@ -77,6 +93,56 @@ export default function RegisterPage() {
               <div className="absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-brand-600/5" />
               
               <div className="relative p-8">
+                {step === "connect" && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-center py-8"
+                  >
+                    {/* Wallet Icon */}
+                    <div className="flex justify-center mb-8">
+                      <div className="relative">
+                        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-300/20 to-brand-600/20 flex items-center justify-center border border-brand-500/30">
+                          <Wallet className="w-12 h-12 text-brand-400" />
+                        </div>
+                        <div className="absolute inset-0 rounded-full bg-brand-500/10 blur-xl" />
+                      </div>
+                    </div>
+
+                    <h3 className="font-display text-2xl font-bold text-foreground mb-2">
+                      Connect Your Wallet
+                    </h3>
+                    <p className="text-foreground-secondary mb-8 max-w-sm mx-auto">
+                      Connect your Ethereum wallet to register and start earning lower fees
+                    </p>
+
+                    {/* Connect Button */}
+                    <Button
+                      variant="hero"
+                      size="xl"
+                      className="w-full mb-4"
+                      onClick={handleConnectWallet}
+                      disabled={isConnecting}
+                    >
+                      {isConnecting ? (
+                        <>
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Connecting...
+                        </>
+                      ) : (
+                        <>
+                          <Wallet className="h-5 w-5" />
+                          Connect Wallet (Demo)
+                        </>
+                      )}
+                    </Button>
+
+                    <p className="text-xs text-foreground-tertiary">
+                      This is a demo. No real wallet connection required.
+                    </p>
+                  </motion.div>
+                )}
+
                 {step === "info" && (
                   <motion.div
                     initial={{ opacity: 0 }}
@@ -273,14 +339,20 @@ export default function RegisterPage() {
                   <Wallet className="h-6 w-6 text-brand-500" />
                 </div>
                 <div>
-                  <p className="text-sm text-foreground-tertiary">Connected Wallet</p>
-                  <p className="font-mono font-medium text-foreground">{walletAddress}</p>
+                  <p className="text-sm text-foreground-tertiary">
+                    {walletAddress ? "Connected Wallet" : "Wallet Status"}
+                  </p>
+                  <p className="font-mono font-medium text-foreground">
+                    {walletAddress || "Not connected"}
+                  </p>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
-                <span className="text-foreground-secondary">Balance</span>
-                <span className="font-medium text-foreground">{walletBalance}</span>
-              </div>
+              {walletAddress && (
+                <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
+                  <span className="text-foreground-secondary">Balance</span>
+                  <span className="font-medium text-foreground">{walletBalance}</span>
+                </div>
+              )}
             </Card>
           </FadeIn>
 

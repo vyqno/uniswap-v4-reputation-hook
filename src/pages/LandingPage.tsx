@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
+import handLeftGreen from "@/assets/hand-left-green.png";
+import handRightGreen from "@/assets/hand-right-green.png";
 
 // Reveal animation hook
 function useRevealAnimation() {
@@ -88,12 +90,11 @@ function HeroSection() {
       {/* Floating Hand Image - Left */}
       <div className="absolute left-[-5%] top-[10%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
         <img
-          src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=500&fit=crop&crop=center"
+          src={handLeftGreen}
           alt=""
           className="w-full h-auto drop-shadow-2xl"
           style={{ 
-            transform: "rotate(-6deg)",
-            filter: "hue-rotate(100deg) saturate(1.3) brightness(0.85)"
+            transform: "rotate(-6deg)"
           }}
         />
       </div>
@@ -101,12 +102,11 @@ function HeroSection() {
       {/* Floating Hand Image - Right */}
       <div className="absolute right-[-5%] bottom-[5%] w-[30%] max-w-[350px] animate-float-right pointer-events-none hidden lg:block">
         <img
-          src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&h=500&fit=crop&crop=center"
+          src={handRightGreen}
           alt=""
           className="w-full h-auto drop-shadow-2xl"
           style={{ 
-            transform: "rotate(6deg) scaleX(-1)",
-            filter: "hue-rotate(100deg) saturate(1.3) brightness(0.85)"
+            transform: "rotate(6deg) scaleX(-1)"
           }}
         />
       </div>

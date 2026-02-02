@@ -8,32 +8,27 @@ import { useTransparentPng } from "@/hooks/useTransparentPng";
 // Reveal animation hook
 function useRevealAnimation() {
   const ref = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("active");
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("active");
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: "0px 0px -50px 0px"
+    });
     const elements = ref.current?.querySelectorAll(".reveal");
-    elements?.forEach((el) => observer.observe(el));
-
+    elements?.forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
-
   return ref;
 }
 
 // Header/Navigation - Exact structure
 function Header() {
-  return (
-    <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md">
+  return <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <nav className="flex items-center justify-between py-6">
           {/* Logo */}
@@ -45,22 +40,13 @@ function Header() {
 
           {/* Center Nav - Desktop */}
           <div className="hidden md:flex items-center gap-8">
-            <Link
-              to="/how-it-works"
-              className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300"
-            >
+            <Link to="/how-it-works" className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300">
               How It Works
             </Link>
-            <Link
-              to="/#tiers"
-              className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300"
-            >
+            <Link to="/#tiers" className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300">
               Tiers
             </Link>
-            <Link
-              to="/faq"
-              className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300"
-            >
+            <Link to="/faq" className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300">
               FAQ
             </Link>
           </div>
@@ -73,17 +59,14 @@ function Header() {
           </Link>
         </nav>
       </div>
-    </header>
-  );
+    </header>;
 }
 
 // Hero Section - Exact structure from HTML
 function HeroSection() {
   const handLeftClean = useTransparentPng(handLeftGreen);
   const handRightClean = useTransparentPng(handRightGreen);
-
-  return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+  return <section className="relative min-h-screen flex items-center justify-center overflow-hidden mx-0 my-0">
       {/* Atmospheric Fog Background */}
       <div className="fog-overlay" />
       
@@ -93,28 +76,18 @@ function HeroSection() {
 
       {/* Floating Hand Image - Left */}
       <div className="absolute left-[-5%] top-[0%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
-        <img
-          src={handLeftClean}
-          alt=""
-          className="w-full h-auto"
-          style={{ 
-            transform: "rotate(-6deg)",
-            filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
-          }}
-        />
+        <img src={handLeftClean} alt="" className="w-full h-auto" style={{
+        transform: "rotate(-6deg)",
+        filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
+      }} />
       </div>
 
       {/* Floating Hand Image - Right */}
       <div className="absolute right-[-5%] bottom-[15%] w-[30%] max-w-[350px] animate-float-right pointer-events-none hidden lg:block">
-        <img
-          src={handRightClean}
-          alt=""
-          className="w-full h-auto"
-          style={{ 
-            transform: "rotate(6deg) scaleX(-1)",
-            filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
-          }}
-        />
+        <img src={handRightClean} alt="" className="w-full h-auto" style={{
+        transform: "rotate(6deg) scaleX(-1)",
+        filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
+      }} />
       </div>
 
       {/* Content Container */}
@@ -159,16 +132,13 @@ function HeroSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
 
 // Philosophy Section - Exact structure from HTML
 function PhilosophySection() {
   const containerRef = useRevealAnimation();
-
-  return (
-    <section className="py-24 lg:py-32 border-t border-border" ref={containerRef}>
+  return <section className="py-24 lg:py-32 border-t border-border" ref={containerRef}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           {/* Left Column - Quote */}
@@ -190,16 +160,13 @@ function PhilosophySection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
 
 // Services Section - Exact structure from HTML
 function ServicesSection() {
   const containerRef = useRevealAnimation();
-
-  return (
-    <section className="py-24 lg:py-32 border-t border-border" id="tiers" ref={containerRef}>
+  return <section className="py-24 lg:py-32 border-t border-border" id="tiers" ref={containerRef}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Section Title */}
         <div className="reveal mb-16">
@@ -246,7 +213,9 @@ function ServicesSection() {
           </div>
 
           {/* Card 02 - Loyal Holders */}
-          <div className="reveal" style={{ transitionDelay: "100ms" }}>
+          <div className="reveal" style={{
+          transitionDelay: "100ms"
+        }}>
             <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[400px] flex flex-col hover:border-foreground-tertiary transition-all duration-500">
               {/* Card Header */}
               <div className="flex items-center justify-between mb-auto">
@@ -278,16 +247,13 @@ function ServicesSection() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 }
 
 // Footer - Exact structure from HTML
 function Footer() {
   const currentYear = new Date().getFullYear();
-
-  return (
-    <footer className="py-16 lg:py-24 border-t border-border">
+  return <footer className="py-16 lg:py-24 border-t border-border">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12">
           {/* Large Logo Text */}
@@ -301,28 +267,13 @@ function Footer() {
           <div className="flex flex-col items-start lg:items-end gap-6">
             {/* Social Links */}
             <div className="flex items-center gap-8 text-sm text-foreground-secondary">
-              <a
-                href="https://twitter.com/uniswap"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors duration-300"
-              >
+              <a href="https://twitter.com/uniswap" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-300">
                 Twitter
               </a>
-              <a
-                href="https://discord.gg/uniswap"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors duration-300"
-              >
+              <a href="https://discord.gg/uniswap" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-300">
                 Discord
               </a>
-              <a
-                href="https://github.com/uniswap"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-foreground transition-colors duration-300"
-              >
+              <a href="https://github.com/uniswap" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors duration-300">
                 GitHub
               </a>
             </div>
@@ -334,14 +285,12 @@ function Footer() {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 }
 
 // Main Landing Page
 export default function LandingPage() {
-  return (
-    <div className="min-h-screen bg-background text-foreground">
+  return <div className="min-h-screen bg-background text-foreground">
       {/* Noise Texture Overlay */}
       <div className="noise-overlay" />
 
@@ -357,6 +306,5 @@ export default function LandingPage() {
 
       {/* Footer */}
       <Footer />
-    </div>
-  );
+    </div>;
 }

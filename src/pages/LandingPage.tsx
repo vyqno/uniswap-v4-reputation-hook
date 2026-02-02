@@ -88,7 +88,7 @@ function HeroSection() {
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-emerald-700/15 blur-[100px] pointer-events-none" />
 
       {/* Floating Hand Image - Left */}
-      <div className="absolute left-[-8%] top-[-5%] w-[35%] max-w-[400px] animate-float-left pointer-events-none hidden lg:block mix-blend-soft-light">
+      <div className="absolute left-[-8%] top-[-5%] w-[35%] max-w-[400px] animate-float-left pointer-events-none hidden lg:block mix-blend-overlay">
         <img
           src={handLeftGreen}
           alt=""
@@ -100,7 +100,7 @@ function HeroSection() {
       </div>
 
       {/* Floating Hand Image - Right */}
-      <div className="absolute right-[-10%] bottom-[15%] w-[35%] max-w-[400px] animate-float-right pointer-events-none hidden lg:block mix-blend-soft-light">
+      <div className="absolute right-[-10%] bottom-[15%] w-[35%] max-w-[400px] animate-float-right pointer-events-none hidden lg:block mix-blend-overlay">
         <img
           src={handRightGreen}
           alt=""

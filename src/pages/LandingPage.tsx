@@ -75,7 +75,7 @@ function HeroSection() {
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-emerald-700/15 blur-[100px] pointer-events-none" />
 
       {/* Floating Hand Image - Left */}
-      <div className="absolute left-[-3%] top-[-20%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
+      <div className="absolute left-[-3%] top-[-25%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
         <img src={handLeftClean} alt="" className="w-full h-auto" style={{
         transform: "rotate(-6deg)",
         filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"

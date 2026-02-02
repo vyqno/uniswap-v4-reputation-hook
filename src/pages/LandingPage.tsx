@@ -106,7 +106,7 @@ function HeroSection() {
           alt=""
           className="w-full h-auto drop-shadow-2xl"
           style={{ 
-            transform: "rotate(6deg) scaleX(-1)"
+            transform: "rotate(180deg)"
           }}
         />
       </div>

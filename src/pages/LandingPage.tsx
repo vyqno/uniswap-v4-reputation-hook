@@ -81,9 +81,9 @@ function HeroSection() {
       {/* Atmospheric Fog Background */}
       <div className="fog-overlay" />
       
-      {/* Red Glow Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-red-600/20 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-red-700/15 blur-[100px] pointer-events-none" />
+      {/* Green Glow Orbs */}
+      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-emerald-600/20 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-emerald-700/15 blur-[100px] pointer-events-none" />
 
       {/* Floating Hand Image - Left */}
       <div className="absolute left-[-5%] top-[10%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
@@ -93,7 +93,7 @@ function HeroSection() {
           className="w-full h-auto drop-shadow-2xl"
           style={{ 
             transform: "rotate(-6deg)",
-            filter: "hue-rotate(-20deg) saturate(1.5) brightness(0.9)"
+            filter: "hue-rotate(100deg) saturate(1.3) brightness(0.85)"
           }}
         />
       </div>
@@ -106,7 +106,7 @@ function HeroSection() {
           className="w-full h-auto drop-shadow-2xl"
           style={{ 
             transform: "rotate(6deg) scaleX(-1)",
-            filter: "hue-rotate(-20deg) saturate(1.5) brightness(0.9)"
+            filter: "hue-rotate(100deg) saturate(1.3) brightness(0.85)"
           }}
         />
       </div>

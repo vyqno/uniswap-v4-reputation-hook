@@ -14,6 +14,9 @@ import RegisterPage from "./pages/RegisterPage";
 import ReputationPage from "./pages/ReputationPage";
 import FAQPage from "./pages/FAQPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
+import FeeCalculatorPage from "./pages/FeeCalculatorPage";
+import WithdrawPage from "./pages/WithdrawPage";
+import StatsPage from "./pages/StatsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -57,10 +60,10 @@ const App = () => (
           <Route path="/dashboard" element={<AppLayout><DashboardPage /></AppLayout>} />
           <Route path="/register" element={<AppLayout><RegisterPage /></AppLayout>} />
           <Route path="/reputation" element={<AppLayout><ReputationPage /></AppLayout>} />
-          <Route path="/fees" element={<AppLayout><DashboardPage /></AppLayout>} />
-          <Route path="/withdraw" element={<AppLayout><DashboardPage /></AppLayout>} />
+          <Route path="/fees" element={<AppLayout><FeeCalculatorPage /></AppLayout>} />
+          <Route path="/withdraw" element={<AppLayout><WithdrawPage /></AppLayout>} />
           <Route path="/history" element={<AppLayout><DashboardPage /></AppLayout>} />
-          <Route path="/stats" element={<AppLayout><DashboardPage /></AppLayout>} />
+          <Route path="/stats" element={<AppLayout><StatsPage /></AppLayout>} />
           
           {/* 404 */}
           <Route path="*" element={<NotFound />} />

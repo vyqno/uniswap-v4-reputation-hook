@@ -13,18 +13,19 @@ import { cn } from "@/lib/utils";
 function HeroSection() {
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
-      {/* Background Effects */}
-      <div className="absolute inset-0 bg-hero-gradient" />
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-brand-500/10 blur-[120px]" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-brand-600/10 blur-[100px]" />
+      {/* Background - Soft Gray with Layered Elements */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background to-background-secondary" />
       
-      {/* Grid Pattern */}
+      {/* Subtle Emerald Orbs */}
+      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-brand-500/5 blur-[100px]" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] rounded-full bg-brand-400/5 blur-[80px]" />
+      
+      {/* Dot Pattern */}
       <div 
-        className="absolute inset-0 opacity-[0.02]"
+        className="absolute inset-0 opacity-[0.3]"
         style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                           linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-          backgroundSize: '60px 60px',
+          backgroundImage: `radial-gradient(circle at 1px 1px, hsl(220 10% 75%) 1px, transparent 0)`,
+          backgroundSize: '32px 32px',
         }}
       />
 
@@ -142,7 +143,7 @@ function HowItWorksSection() {
 
   return (
     <section className="py-24 lg:py-32 relative" id="how-it-works">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-brand-500/5 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background-secondary/50 via-transparent to-background-secondary/50" />
       
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
@@ -285,9 +286,9 @@ function TierBenefitsSection() {
                   {/* Bottom Accent */}
                   <div className={cn(
                     "h-1 w-full",
-                    tier === 1 && "bg-gradient-to-r from-zinc-500 to-zinc-600",
-                    tier === 2 && "bg-gradient-to-r from-cyan-500 to-cyan-600",
-                    tier === 3 && "bg-gradient-to-r from-violet-500 to-violet-600",
+                    tier === 1 && "bg-gradient-to-r from-slate-400 to-slate-500",
+                    tier === 2 && "bg-gradient-to-r from-sky-400 to-sky-500",
+                    tier === 3 && "bg-gradient-to-r from-emerald-400 to-emerald-500",
                     tier === 4 && "bg-gradient-to-r from-amber-400 to-amber-500",
                   )} />
                 </Card>
@@ -311,7 +312,7 @@ function StatsSection() {
 
   return (
     <section className="py-24 lg:py-32 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-brand-500/5 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background via-background-secondary/30 to-background" />
       
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <FadeIn>
@@ -358,8 +359,8 @@ function CTASection() {
             className="relative overflow-hidden"
           >
             {/* Background Effects */}
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-brand-600/10" />
-            <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/20 rounded-full blur-[100px]" />
+            <div className="absolute inset-0 bg-gradient-to-br from-brand-500/5 via-transparent to-brand-600/5 rounded-xl" />
+            <div className="absolute top-0 right-0 w-48 h-48 bg-brand-500/10 rounded-full blur-[80px]" />
             
             <div className="relative p-8 lg:p-16 text-center">
               <h2 className="font-display text-4xl sm:text-5xl font-bold text-foreground mb-4">

@@ -48,10 +48,10 @@ export function TierBadge({
   }[tier];
 
   const tierStyles = {
-    1: "bg-gradient-to-br from-zinc-400 to-zinc-600 text-zinc-100 shadow-zinc-500/30",
-    2: "bg-gradient-to-br from-cyan-400 to-cyan-600 text-white shadow-cyan-500/40",
-    3: "bg-gradient-to-br from-violet-400 to-violet-600 text-white shadow-violet-500/40",
-    4: "bg-gradient-to-br from-amber-300 via-amber-400 to-amber-500 text-amber-900 shadow-amber-500/50",
+    1: "bg-gradient-to-br from-slate-400 to-slate-500 text-white shadow-slate-500/25",
+    2: "bg-gradient-to-br from-sky-400 to-sky-500 text-white shadow-sky-500/30",
+    3: "bg-gradient-to-br from-emerald-400 to-emerald-500 text-white shadow-emerald-500/30",
+    4: "bg-gradient-to-br from-amber-400 to-amber-500 text-amber-950 shadow-amber-500/35",
   }[tier];
 
   return (
@@ -104,7 +104,7 @@ export function TierBadgeRow({ currentTier, className }: TierBadgeRowProps) {
         >
           <TierBadge tier={tier} size="sm" />
           {tier === currentTier && (
-            <div className="absolute -bottom-1 left-1/2 h-1 w-4 -translate-x-1/2 rounded-full bg-brand-500" />
+            <div className="absolute -bottom-1 left-1/2 h-1 w-4 -translate-x-1/2 rounded-full bg-brand-600" />
           )}
         </div>
       ))}

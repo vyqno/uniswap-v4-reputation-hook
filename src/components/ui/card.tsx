@@ -8,15 +8,15 @@ const cardVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-card border-border",
-        elevated: "bg-background-elevated border-border shadow-lg",
+        default: "bg-card border-border shadow-sm",
+        elevated: "bg-card border-border shadow-xl",
         glass: "glass-card",
         gradient: "gradient-border",
-        glow: "bg-card border-brand-500/30 shadow-glow",
-        tier1: "bg-card border-zinc-500/30",
-        tier2: "bg-card border-cyan-500/30",
-        tier3: "bg-card border-violet-500/30",
-        tier4: "bg-card border-amber-500/30 shadow-glow",
+        glow: "bg-card border-brand-500/20 shadow-glow",
+        tier1: "bg-card border-slate-300 shadow-md",
+        tier2: "bg-card border-sky-300 shadow-md",
+        tier3: "bg-card border-emerald-300 shadow-md",
+        tier4: "bg-card border-amber-300 shadow-lg",
       },
       hover: {
         none: "",

@@ -26,10 +26,10 @@ type Options = {
  */
 export function useTransparentPng(src: string, options: Options = {}) {
   const {
-    bgBrightnessThreshold = 238,
-    neutralGrayMaxDelta = 10,
-    neutralGrayMin = 170,
-    neutralGrayMax = 245,
+    bgBrightnessThreshold = 210,
+    neutralGrayMaxDelta = 18,
+    neutralGrayMin = 150,
+    neutralGrayMax = 255,
   } = options;
 
   const key = useMemo(

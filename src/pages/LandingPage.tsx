@@ -88,7 +88,7 @@ function HeroSection() {
       <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-emerald-700/15 blur-[100px] pointer-events-none" />
 
       {/* Floating Hand Image - Left */}
-      <div className="absolute left-[-12%] top-[5%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
+      <div className="absolute left-[-5%] top-[10%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
         <img
           src={handLeftGreen}
           alt=""
@@ -101,13 +101,13 @@ function HeroSection() {
       </div>
 
       {/* Floating Hand Image - Right */}
-      <div className="absolute right-[-12%] bottom-[5%] w-[30%] max-w-[350px] animate-float-right pointer-events-none hidden lg:block">
+      <div className="absolute right-[-5%] bottom-[5%] w-[30%] max-w-[350px] animate-float-right pointer-events-none hidden lg:block">
         <img
           src={handRightGreen}
           alt=""
           className="w-full h-auto mix-blend-multiply"
           style={{ 
-            transform: "rotate(180deg)",
+            transform: "rotate(6deg) scaleX(-1)",
             filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
           }}
         />

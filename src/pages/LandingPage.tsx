@@ -96,9 +96,10 @@ function HeroSection() {
         <img
           src={handLeftClean}
           alt=""
-          className="w-full h-auto drop-shadow-2xl"
+          className="w-full h-auto"
           style={{ 
-            transform: "rotate(-6deg)"
+            transform: "rotate(-6deg)",
+            filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
           }}
         />
       </div>
@@ -108,9 +109,10 @@ function HeroSection() {
         <img
           src={handRightClean}
           alt=""
-          className="w-full h-auto drop-shadow-2xl"
+          className="w-full h-auto"
           style={{ 
-            transform: "rotate(6deg) scaleX(-1)"
+            transform: "rotate(6deg) scaleX(-1)",
+            filter: "drop-shadow(0 0 40px hsl(var(--brand-400) / 0.5)) drop-shadow(0 8px 30px hsl(0 0% 0% / 0.4))"
           }}
         />
       </div>

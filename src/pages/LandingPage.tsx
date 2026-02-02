@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, Zap, Shield, TrendingUp, Gift, Check, ExternalLink, Users, Coins, BarChart3, Percent } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
 import handLeftGreen from "@/assets/hand-left-green.png";
 import handRightGreen from "@/assets/hand-right-green.png";
 
@@ -29,30 +29,16 @@ function useRevealAnimation() {
   return ref;
 }
 
-// Get current time formatted
-function useCurrentTime() {
-  const [time, setTime] = useState(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }));
-  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setTime(new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true }));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-  
-  return time;
-}
-
-// Header/Navigation
+// Header/Navigation - Exact structure
 function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <nav className="flex items-center justify-between py-5">
+        <nav className="flex items-center justify-between py-6">
           {/* Logo */}
           <Link to="/" className="group">
             <span className="font-display text-lg font-semibold text-foreground tracking-tight">
-              ReputationHook.
+              Reputation Hook.
             </span>
           </Link>
 
@@ -64,132 +50,106 @@ function Header() {
             >
               How It Works
             </Link>
-            <a
-              href="#features"
+            <Link
+              to="/#tiers"
               className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300"
             >
-              Features
-            </a>
-            <a
-              href="#stats"
+              Tiers
+            </Link>
+            <Link
+              to="/faq"
               className="text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300"
             >
-              Stats
-            </a>
+              FAQ
+            </Link>
           </div>
 
           {/* CTA */}
-          <button className="px-5 py-2.5 text-sm font-medium text-foreground-secondary border border-border rounded-full hover:bg-foreground/5 hover:text-foreground transition-all duration-300">
-            Connect Wallet
-          </button>
+          <Link to="/register">
+            <button className="px-5 py-2.5 text-sm font-medium text-background bg-foreground rounded-full hover:bg-foreground/90 transition-all duration-300">
+              Start Saving
+            </button>
+          </Link>
         </nav>
       </div>
     </header>
   );
 }
 
-// Hero Section with Stats Panel
+// Hero Section - Exact structure from HTML
 function HeroSection() {
-  const currentTime = useCurrentTime();
-  
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Atmospheric Fog Background */}
       <div className="fog-overlay" />
       
       {/* Green Glow Orbs */}
-      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-emerald-600/15 blur-[120px] pointer-events-none animate-pulse-glow" />
-      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-emerald-700/10 blur-[100px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] rounded-full bg-emerald-600/20 blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] rounded-full bg-emerald-700/15 blur-[100px] pointer-events-none" />
 
       {/* Floating Hand Image - Left */}
-      <div className="absolute left-[-5%] top-[15%] w-[28%] max-w-[320px] animate-float-left pointer-events-none hidden lg:block">
+      <div className="absolute left-[-5%] top-[10%] w-[30%] max-w-[350px] animate-float-left pointer-events-none hidden lg:block">
         <img
           src={handLeftGreen}
           alt=""
           className="w-full h-auto drop-shadow-2xl"
-          style={{ transform: "rotate(-6deg)" }}
+          style={{ 
+            transform: "rotate(-6deg)"
+          }}
         />
       </div>
 
       {/* Floating Hand Image - Right */}
-      <div className="absolute right-[-5%] bottom-[10%] w-[28%] max-w-[320px] animate-float-right pointer-events-none hidden lg:block">
+      <div className="absolute right-[-5%] bottom-[5%] w-[30%] max-w-[350px] animate-float-right pointer-events-none hidden lg:block">
         <img
           src={handRightGreen}
           alt=""
           className="w-full h-auto drop-shadow-2xl"
-          style={{ transform: "rotate(6deg) scaleX(-1)" }}
+          style={{ 
+            transform: "rotate(6deg) scaleX(-1)"
+          }}
         />
       </div>
 
       {/* Content Container */}
-      <div className="relative z-10 mx-auto max-w-4xl px-6 lg:px-8 py-20">
-        {/* Main Content Card */}
-        <div className="reveal active">
-          <div className="bg-card/60 backdrop-blur-xl border border-border rounded-3xl p-8 md:p-12 shadow-2xl">
-            {/* Title */}
-            <div className="text-center mb-8">
-              <h1 className="mb-4">
-                <span className="block font-display text-4xl sm:text-5xl md:text-6xl font-semibold tracking-tight text-foreground leading-tight">
-                  Uniswap V4
-                </span>
-                <span className="block font-serif italic text-4xl sm:text-5xl md:text-6xl font-normal text-foreground mt-1">
-                  Reputation Hook
-                </span>
-              </h1>
-              <p className="text-lg sm:text-xl text-brand-400 font-medium mt-4">
-                Earn Lower Fees Through Loyalty
-              </p>
-            </div>
+      <div className="relative z-10 mx-auto max-w-5xl px-6 lg:px-8 py-32 text-center">
+        {/* Main Title */}
+        <div className="reveal active mb-8">
+          <h1 className="mb-4">
+            <span className="block font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tight text-foreground">
+              Reputation Hook.
+            </span>
+            <span className="block font-serif italic text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-normal text-foreground-secondary mt-2">
+              The loyalty layer.
+            </span>
+          </h1>
+        </div>
 
-            {/* Description */}
-            <div className="max-w-2xl mx-auto text-center mb-10">
-              <p className="text-base sm:text-lg text-foreground-secondary leading-relaxed">
-                Bond a small amount of ETH, activate your reputation, and unlock tiered fee discounts—transparent, onchain, and built for long-term traders.
-              </p>
-            </div>
+        {/* Description */}
+        <div className="reveal active max-w-xl mx-auto mb-12">
+          <p className="text-base sm:text-lg text-foreground-secondary leading-relaxed">
+            Register your wallet with a small bond and unlock up to 75% fee discounts on every swap. The longer you stay, the more you save.
+          </p>
+        </div>
 
-            {/* CTA and Stats Row */}
-            <div className="flex flex-col items-center gap-8">
-              {/* Primary CTA */}
-              <Link to="/register">
-                <button className="group inline-flex items-center gap-3 px-8 py-4 text-base font-medium bg-brand-500 text-white rounded-full hover:bg-brand-600 transition-all duration-300 shadow-glow btn-glow">
-                  <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white/60 opacity-75"></span>
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
-                  </span>
-                  <span>Start Earning</span>
-                </button>
-              </Link>
+        {/* CTA Row */}
+        <div className="reveal active flex flex-col sm:flex-row items-center justify-center gap-6">
+          {/* Button */}
+          <Link to="/register">
+            <button className="group inline-flex items-center gap-3 px-8 py-4 text-base font-medium text-background bg-foreground rounded-full hover:bg-foreground/90 transition-all duration-300">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand-500"></span>
+              </span>
+              <span>Enter the Void</span>
+            </button>
+          </Link>
 
-              {/* Stats Mini Cards */}
-              <div className="w-full max-w-md">
-                <div className="grid grid-cols-2 gap-4 mb-4">
-                  <div className="bg-background/50 border border-border/50 rounded-xl p-4">
-                    <div className="flex items-center gap-2 text-foreground-tertiary text-xs mb-1">
-                      <Users className="w-3 h-3" />
-                      Registered Users
-                    </div>
-                    <p className="font-display text-2xl font-semibold text-foreground">1,234</p>
-                    <p className="text-xs text-foreground-muted mt-1">Live from registry contract</p>
-                  </div>
-                  <div className="bg-background/50 border border-border/50 rounded-xl p-4">
-                    <div className="flex items-center gap-2 text-foreground-tertiary text-xs mb-1">
-                      <Coins className="w-3 h-3" />
-                      Bonded ETH
-                    </div>
-                    <p className="font-display text-2xl font-semibold text-foreground">45.6</p>
-                    <p className="text-xs text-foreground-muted mt-1">Estimated total bonded</p>
-                  </div>
-                </div>
-
-                {/* Network Status */}
-                <div className="flex items-center justify-center gap-3 text-xs text-foreground-tertiary">
-                  <span>{currentTime}</span>
-                  <span className="w-1 h-1 rounded-full bg-brand-500"></span>
-                  <span>Sepolia (Testnet)</span>
-                </div>
-              </div>
-            </div>
+          {/* Info */}
+          <div className="flex items-center gap-3 text-sm text-foreground-tertiary">
+            <span>0.001 ETH</span>
+            <span className="w-1 h-1 rounded-full bg-foreground-muted"></span>
+            <span>Uniswap V4</span>
           </div>
         </div>
       </div>
@@ -197,121 +157,78 @@ function HeroSection() {
   );
 }
 
-// How It Works Section
-function HowItWorksSection() {
+// Philosophy Section - Exact structure from HTML
+function PhilosophySection() {
   const containerRef = useRevealAnimation();
-  
-  const steps = [
-    {
-      icon: Coins,
-      title: "1. Bond",
-      description: "Deposit the registration bond (e.g., 0.001 ETH) to start your reputation timer."
-    },
-    {
-      icon: Shield,
-      title: "2. Activate",
-      description: "A short delay (e.g., 24h) prevents instant gaming and makes loyalty measurable."
-    },
-    {
-      icon: TrendingUp,
-      title: "3. Trade",
-      description: "Swap normally. The fee hook reads your tier and applies the correct fee automatically."
-    },
-    {
-      icon: Gift,
-      title: "4. Save",
-      description: "Higher tiers unlock deeper discounts—up to 75% off base fee at Tier 4."
-    }
-  ];
 
   return (
     <section className="py-24 lg:py-32 border-t border-border" ref={containerRef}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="reveal text-center mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-4">
-            Build reputation, unlock rewards.
-          </h2>
-          <p className="text-foreground-secondary max-w-2xl mx-auto text-lg">
-            A minimalist path to lower fees: bond once, wait for activation, trade as usual, and watch discounts appear automatically.
-          </p>
-        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          {/* Left Column - Quote */}
+          <div className="reveal">
+            <h2 className="font-display text-2xl sm:text-3xl md:text-4xl font-semibold text-foreground leading-snug mb-6">
+              We turn the unseen into the unforgettable. A Uniswap V4 hook for those who value long-term commitment.
+            </h2>
+            <p className="text-foreground-secondary text-base">
+              Elegance is loyalty. We reward the patient traders so your savings grow with absolute clarity.
+            </p>
+          </div>
 
-        {/* Steps Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {steps.map((step, index) => (
-            <div
-              key={step.title}
-              className="reveal bg-card border border-border rounded-2xl p-6 hover:border-foreground-tertiary transition-all duration-300"
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <div className="w-12 h-12 rounded-xl bg-brand-500/10 flex items-center justify-center mb-4">
-                <step.icon className="w-6 h-6 text-brand-400" />
-              </div>
-              <h3 className="font-display text-xl font-semibold text-foreground mb-2">
-                {step.title}
-              </h3>
-              <p className="text-foreground-secondary text-sm leading-relaxed">
-                {step.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* Brand Marquee */}
-        <div className="reveal mt-16 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
-          <p className="text-lg font-display tracking-[0.2em] text-foreground-muted">UNISWAP</p>
-          <p className="text-lg font-display tracking-[0.2em] text-foreground-muted">WAGMI</p>
-          <p className="text-lg font-display tracking-[0.2em] text-foreground-muted">VIEM</p>
-          <p className="text-lg font-display tracking-[0.2em] text-foreground-muted">R3F</p>
+          {/* Right Column - Brand Logos */}
+          <div className="reveal flex flex-wrap items-center justify-start lg:justify-end gap-x-12 gap-y-4">
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">UNISWAP</p>
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">ETHEREUM</p>
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">DEFI</p>
+            <p className="text-xl font-display tracking-[0.2em] text-foreground-muted">WEB3</p>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-// Features Section
-function FeaturesSection() {
+// Services Section - Exact structure from HTML
+function ServicesSection() {
   const containerRef = useRevealAnimation();
 
   return (
-    <section id="features" className="py-24 lg:py-32 border-t border-border" ref={containerRef}>
+    <section className="py-24 lg:py-32 border-t border-border" id="tiers" ref={containerRef}>
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section Header */}
+        {/* Section Title */}
         <div className="reveal mb-16">
           <h2 className="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-foreground leading-tight">
-            Reputation that{" "}
+            Define your{" "}
             <span className="font-serif italic font-normal text-foreground-secondary">
-              pays you back
+              trading reputation
             </span>
           </h2>
         </div>
 
-        {/* Feature Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Card 01 - Instant Rewards */}
+        {/* Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Card 01 - New Traders */}
           <div className="reveal">
-            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[380px] flex flex-col hover:border-foreground-tertiary transition-all duration-500 overflow-hidden">
-              {/* Glow Effect */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[400px] flex flex-col hover:border-foreground-tertiary transition-all duration-500">
               {/* Card Header */}
-              <div className="flex items-center justify-between mb-auto relative">
+              <div className="flex items-center justify-between mb-auto">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-brand-500/10 flex items-center justify-center">
-                    <Zap className="w-5 h-5 text-brand-400" />
+                  <div className="w-12 h-12 rounded-full bg-foreground/5 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-foreground-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
                   </div>
                   <span className="text-foreground-muted text-sm font-mono">01</span>
                 </div>
               </div>
 
               {/* Card Content */}
-              <div className="mt-auto relative">
+              <div className="mt-auto">
                 <h3 className="font-display text-4xl sm:text-5xl font-semibold text-foreground leading-none mb-4">
-                  Instant<br />Rewards
+                  New<br />Traders
                 </h3>
-                <p className="text-foreground-secondary text-base leading-relaxed max-w-sm">
-                  See your expected fee before swapping. As your reputation matures, discounts apply seamlessly—no dashboards required.
+                <p className="text-foreground-secondary text-base leading-relaxed max-w-xs">
+                  You have the spark. We provide the atmosphere for it to ignite into a blazing reality.
                 </p>
               </div>
 
@@ -322,34 +239,29 @@ function FeaturesSection() {
             </div>
           </div>
 
-          {/* Card 02 - Lifetime Benefits */}
+          {/* Card 02 - Loyal Holders */}
           <div className="reveal" style={{ transitionDelay: "100ms" }}>
-            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[380px] flex flex-col hover:border-foreground-tertiary transition-all duration-500 overflow-hidden">
-              {/* Glow Effect */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              
+            <div className="group relative bg-card border border-border rounded-2xl p-8 lg:p-10 min-h-[400px] flex flex-col hover:border-foreground-tertiary transition-all duration-500">
               {/* Card Header */}
-              <div className="flex items-center justify-between mb-auto relative">
+              <div className="flex items-center justify-between mb-auto">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-brand-500/10 flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-brand-400" />
+                  <div className="w-12 h-12 rounded-full bg-foreground/5 flex items-center justify-center">
+                    <svg className="w-5 h-5 text-foreground-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
                   </div>
                   <span className="text-foreground-muted text-sm font-mono">02</span>
                 </div>
               </div>
 
               {/* Card Content */}
-              <div className="mt-auto relative">
+              <div className="mt-auto">
                 <h3 className="font-display text-4xl sm:text-5xl font-semibold text-foreground leading-none mb-4">
-                  Lifetime<br />Benefits
+                  Loyal<br />Holders
                 </h3>
-                <p className="text-foreground-secondary text-base leading-relaxed max-w-sm mb-4">
-                  Your onchain history becomes a permanent asset. Withdraw your bond after cooldown while keeping what you earned.
+                <p className="text-foreground-secondary text-base leading-relaxed max-w-xs">
+                  You've arrived. Now let's make sure you never leave their minds. Permanence is our craft.
                 </p>
-                <div className="flex items-center gap-2 text-brand-400 text-sm">
-                  <Check className="w-4 h-4" />
-                  <span>Transparent fee logic</span>
-                </div>
               </div>
 
               {/* Hover Arrow */}
@@ -364,70 +276,7 @@ function FeaturesSection() {
   );
 }
 
-// Live Stats Section
-function StatsSection() {
-  const containerRef = useRevealAnimation();
-  
-  const stats = [
-    { icon: Users, label: "Registered", value: "1,234", description: "Total wallets registered" },
-    { icon: Coins, label: "Bonded", value: "45.6 ETH", description: "Total registration bonds" },
-    { icon: BarChart3, label: "Volume", value: "$12.3M", description: "Swap volume (tracked)" },
-    { icon: Percent, label: "Avg Save", value: "15.2%", description: "Average discount applied" },
-  ];
-
-  return (
-    <section id="stats" className="py-24 lg:py-32 border-t border-border" ref={containerRef}>
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="reveal text-center mb-16">
-          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-semibold text-foreground mb-4">
-            Live system signals.
-          </h2>
-          <p className="text-foreground-secondary max-w-2xl mx-auto text-lg">
-            A single glance at adoption, liquidity commitment, and the kind of savings loyalty makes possible.
-          </p>
-        </div>
-
-        {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 mb-10">
-          {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className="reveal bg-card border border-border rounded-2xl p-6 text-center hover:border-foreground-tertiary transition-all duration-300"
-              style={{ transitionDelay: `${index * 100}ms` }}
-            >
-              <div className="flex items-center justify-center gap-2 text-foreground-tertiary text-xs mb-3">
-                <stat.icon className="w-3.5 h-3.5" />
-                <span>{stat.label}</span>
-              </div>
-              <p className="font-display text-3xl md:text-4xl font-semibold text-foreground mb-1">
-                {stat.value}
-              </p>
-              <p className="text-xs text-foreground-muted">
-                {stat.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* View Contracts Link */}
-        <div className="reveal flex justify-center">
-          <a
-            href="https://sepolia.etherscan.io"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm text-foreground-secondary hover:text-foreground transition-colors duration-300"
-          >
-            <ExternalLink className="w-4 h-4" />
-            View contracts on Sepolia
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// Footer
+// Footer - Exact structure from HTML
 function Footer() {
   const currentYear = new Date().getFullYear();
 
@@ -437,25 +286,22 @@ function Footer() {
         <div className="flex flex-col lg:flex-row items-start lg:items-end justify-between gap-12">
           {/* Large Logo Text */}
           <div className="reveal active">
-            <h2 className="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-foreground tracking-tight leading-none mb-4">
-              REPUTATION.
+            <h2 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-foreground tracking-tight leading-none">
+              REPUTATION HOOK.
             </h2>
-            <p className="text-foreground-secondary max-w-md">
-              Uniswap V4 Reputation Hook helps long-term traders pay less—by proving loyalty onchain.
-            </p>
           </div>
 
           {/* Links & Copyright */}
           <div className="flex flex-col items-start lg:items-end gap-6">
             {/* Social Links */}
-            <div className="flex items-center gap-6 text-sm text-foreground-secondary">
+            <div className="flex items-center gap-8 text-sm text-foreground-secondary">
               <a
                 href="https://twitter.com/uniswap"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-foreground transition-colors duration-300"
               >
-                X (Twitter)
+                Twitter
               </a>
               <a
                 href="https://discord.gg/uniswap"
@@ -477,7 +323,7 @@ function Footer() {
 
             {/* Copyright */}
             <p className="text-sm text-foreground-muted">
-              © {currentYear} ReputationHook. All rights reserved.
+              © {currentYear} Reputation Hook. All rights reserved.
             </p>
           </div>
         </div>
@@ -499,9 +345,8 @@ export default function LandingPage() {
       {/* Main Content */}
       <main>
         <HeroSection />
-        <HowItWorksSection />
-        <FeaturesSection />
-        <StatsSection />
+        <PhilosophySection />
+        <ServicesSection />
       </main>
 
       {/* Footer */}

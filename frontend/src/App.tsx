@@ -1,7 +1,6 @@
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -17,9 +16,8 @@ import HowItWorksPage from "./pages/HowItWorksPage";
 import FeeCalculatorPage from "./pages/FeeCalculatorPage";
 import WithdrawPage from "./pages/WithdrawPage";
 import StatsPage from "./pages/StatsPage";
+import SwapPage from "./pages/SwapPage";
 import NotFound from "./pages/NotFound";
-
-const queryClient = new QueryClient();
 
 // Marketing Layout (with header/footer)
 function MarketingLayout({ children }: { children: React.ReactNode }) {
@@ -45,32 +43,31 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 }
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          {/* Marketing Pages */}
-          <Route path="/" element={<MarketingLayout><LandingPage /></MarketingLayout>} />
-          <Route path="/how-it-works" element={<MarketingLayout><HowItWorksPage /></MarketingLayout>} />
-          <Route path="/faq" element={<MarketingLayout><FAQPage /></MarketingLayout>} />
-          
-          {/* App Pages */}
-          <Route path="/dashboard" element={<AppLayout><DashboardPage /></AppLayout>} />
-          <Route path="/register" element={<AppLayout><RegisterPage /></AppLayout>} />
-          <Route path="/reputation" element={<AppLayout><ReputationPage /></AppLayout>} />
-          <Route path="/fees" element={<AppLayout><FeeCalculatorPage /></AppLayout>} />
-          <Route path="/withdraw" element={<AppLayout><WithdrawPage /></AppLayout>} />
-          <Route path="/history" element={<AppLayout><DashboardPage /></AppLayout>} />
-          <Route path="/stats" element={<AppLayout><StatsPage /></AppLayout>} />
-          
-          {/* 404 */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
+  <TooltipProvider>
+    <Toaster />
+    <Sonner />
+    <BrowserRouter>
+      <Routes>
+        {/* Marketing Pages */}
+        <Route path="/" element={<MarketingLayout><LandingPage /></MarketingLayout>} />
+        <Route path="/how-it-works" element={<MarketingLayout><HowItWorksPage /></MarketingLayout>} />
+        <Route path="/faq" element={<MarketingLayout><FAQPage /></MarketingLayout>} />
+
+        {/* App Pages */}
+        <Route path="/dashboard" element={<AppLayout><DashboardPage /></AppLayout>} />
+        <Route path="/register" element={<AppLayout><RegisterPage /></AppLayout>} />
+        <Route path="/reputation" element={<AppLayout><ReputationPage /></AppLayout>} />
+        <Route path="/fees" element={<AppLayout><FeeCalculatorPage /></AppLayout>} />
+        <Route path="/withdraw" element={<AppLayout><WithdrawPage /></AppLayout>} />
+        <Route path="/swap" element={<AppLayout><SwapPage /></AppLayout>} />
+        <Route path="/history" element={<AppLayout><DashboardPage /></AppLayout>} />
+        <Route path="/stats" element={<AppLayout><StatsPage /></AppLayout>} />
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  </TooltipProvider>
 );
 
 export default App;

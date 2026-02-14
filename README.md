@@ -4,12 +4,14 @@
 
 ![Solidity](https://img.shields.io/badge/Solidity-0.8.26-blue)
 ![Foundry](https://img.shields.io/badge/Foundry-Latest-orange)
+![React](https://img.shields.io/badge/React-18-61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6)
 ![Tests](https://img.shields.io/badge/Tests-105%20Passing-brightgreen)
 ![License](https://img.shields.io/badge/License-MIT-green)
 
 **An Uniswap V4 Hook that rewards loyal users with dynamic fee discounts based on on-chain reputation.**
 
-[Features](#-features) • [Architecture](#-architecture) • [Installation](#-installation) • [Testing](#-testing) • [Deployment](#-deployment) • [Gas Report](#-gas-report)
+[Features](#-features) • [Architecture](#-architecture) • [Frontend](#-frontend) • [Installation](#-installation) • [Testing](#-testing) • [Deployment](#-deployment) • [Gas Report](#-gas-report)
 
 </div>
 
@@ -88,6 +90,7 @@ uniswap-v4-liquidity-vault/
 │       └── MockWETH.sol            # Test WETH token
 ├── script/
 │   ├── DeployComplete.s.sol        # Master deployment script
+│   ├── DeploySwapRouter.s.sol      # Swap router deployment
 │   ├── TestFullFlow.s.sol          # Full flow simulation
 │   ├── Interactions.s.sol          # CLI interaction tools
 │   └── helpers/
@@ -100,9 +103,85 @@ uniswap-v4-liquidity-vault/
 │   ├── invariant/                  # Invariant tests
 │   ├── fork/                       # Fork tests
 │   └── helpers/                    # Test utilities
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── layout/             # Header, Sidebar, Footer
+│   │   │   ├── common/             # Logo, TierBadge
+│   │   │   ├── animations/         # FadeIn, CountUp, etc.
+│   │   │   └── ui/                 # shadcn/ui components
+│   │   ├── hooks/
+│   │   │   ├── useReputation.ts    # On-chain reputation reads/writes
+│   │   │   ├── useSwap.ts          # Token swap execution
+│   │   │   ├── usePoolState.ts     # Pool slot0/liquidity reads
+│   │   │   └── useEthPrice.ts      # CoinGecko ETH price feed
+│   │   ├── lib/
+│   │   │   ├── abi/                # Contract ABIs
+│   │   │   ├── constants.ts        # Addresses, tiers, config
+│   │   │   └── wagmi.ts            # Wagmi + RainbowKit config
+│   │   ├── pages/                  # All route pages
+│   │   ├── App.tsx                 # Router & layout
+│   │   └── main.tsx                # Entry point with providers
+│   └── package.json
 └── deployments/
     └── sepolia.json               # Deployed addresses
 ```
+
+---
+
+## 🖥 Frontend
+
+A full-featured React dashboard that connects directly to the deployed smart contracts on Sepolia via **wagmi** + **viem**, with **RainbowKit** for wallet connection.
+
+### Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| **Framework** | React 18 + TypeScript |
+| **Build Tool** | Vite |
+| **Styling** | Tailwind CSS + shadcn/ui |
+| **Animations** | Framer Motion |
+| **Web3** | wagmi v2 + viem v2 |
+| **Wallet** | RainbowKit v2 |
+| **State** | TanStack React Query |
+
+### Pages
+
+| Page | Route | Description |
+|------|-------|-------------|
+| **Landing** | `/` | Marketing page with tier breakdown and CTA |
+| **How It Works** | `/how-it-works` | Step-by-step explanation of the reputation system |
+| **FAQ** | `/faq` | Frequently asked questions |
+| **Dashboard** | `/dashboard` | Live reputation stats, tier progress, fee savings |
+| **Register** | `/register` | Bond 0.001 ETH to register on-chain |
+| **Reputation** | `/reputation` | Detailed tier timeline and milestone tracker |
+| **Fee Calculator** | `/fees` | Calculate fee savings per tier and swap volume |
+| **Withdraw** | `/withdraw` | Withdraw bond after 30-day cooldown |
+| **Swap** | `/swap` | Execute USDC/WETH swaps through the V4 pool with reputation-based fees |
+| **Stats** | `/stats` | Protocol-wide stats (total registered, TVL, contract balances) |
+
+### On-Chain Hooks
+
+All page data is live from the blockchain — no mock data:
+
+- **`useReputation`** — Reads registration status, reputation age, tier, fee quote, and bond state from `ReputationRegistry` and `ReputationFeeHook`
+- **`useSwap`** — Executes token swaps through `PoolSwapTest`, handles approvals and WETH wrapping
+- **`usePoolState`** — Reads pool slot0 (sqrtPriceX96, tick, fees) and liquidity directly from `PoolManager` via `extsload`
+- **`useEthPrice`** — Fetches live ETH/USD price from CoinGecko with session-based caching
+
+### Running the Frontend
+
+```bash
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
+```
+
+The app connects to Sepolia testnet. You need a wallet with Sepolia ETH to interact with the contracts.
 
 ---
 
@@ -112,6 +191,7 @@ uniswap-v4-liquidity-vault/
 
 - [Foundry](https://book.getfoundry.sh/getting-started/installation)
 - [Make](https://www.gnu.org/software/make/)
+- [Node.js](https://nodejs.org/) v18+ (for frontend)
 
 ### Setup
 
@@ -120,18 +200,25 @@ uniswap-v4-liquidity-vault/
 git clone https://github.com/vyqno/uniswap-v4-reputation-hook.git
 cd uniswap-v4-reputation-hook
 
-# Install dependencies
+# Install smart contract dependencies
 make install
 
 # Configure environment
 cp .env.example .env
 # Edit .env with your PRIVATE_KEY and RPC_URLs
+
+# Install frontend dependencies
+cd frontend && npm install
 ```
 
 ### Build
 
 ```bash
+# Build contracts
 make build
+
+# Build frontend
+cd frontend && npm run build
 ```
 
 ---
@@ -182,6 +269,8 @@ make coverage
 | **Registry Proxy** | `0xaC422CB41f699d145B463eC8D4742Fc56c4e88Fa` |
 | **Fee Hook** | `0xb42c6cfF6FA476677cf56D88B4fD06B02E614080` |
 | **Pool Manager** | `0xE03A1074c86CFeDd5C142C4F04F1a1536e203543` |
+| **Modify Liquidity Router** | `0x0C478023803a644c94c4CE1C1e7b9A087e411B0A` |
+| **Swap Router (PoolSwapTest)** | `0xe4bd5fe7b7728c698ebdd57be9a9d1d7291f4972` |
 | **USDC** | `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238` |
 | **WETH** | `0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14` |
 
@@ -267,9 +356,13 @@ make interact-withdraw
 - [x] V4 Hook Implementation
 - [x] Comprehensive Test Suite
 - [x] Sepolia Deployment
+- [x] Swap Router Deployment
+- [x] Frontend Dashboard (React + TypeScript)
+- [x] Wallet Integration (RainbowKit + wagmi)
+- [x] Live On-Chain Data (no mock data)
+- [x] Token Swap UI (USDC/WETH via V4 Pool)
 - [ ] Base Mainnet Deployment
 - [ ] Polygon Mainnet Deployment
-- [ ] Frontend Dashboard
 - [ ] Governance Integration
 - [ ] Multi-pool Support
 - [ ] Slashing Mechanism

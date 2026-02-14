@@ -8,16 +8,22 @@ import { Label } from "@/components/ui/label";
 import { TierBadge } from "@/components/common/TierBadge";
 import { Slider } from "@/components/ui/slider";
 import { Calculator, TrendingDown, Sparkles, ArrowRight, Info } from "lucide-react";
+import { useAccount } from "wagmi";
 import { TIERS } from "@/lib/constants";
+import { useUserReputation } from "@/hooks/useReputation";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 
 const BASE_FEE_RATE = 0.003; // 0.30%
 
 export default function FeeCalculatorPage() {
+  const { isConnected } = useAccount();
+  const rep = useUserReputation();
   const [swapAmount, setSwapAmount] = useState<string>("10000");
   const [monthlySwaps, setMonthlySwaps] = useState<number>(20);
-  const [selectedTier, setSelectedTier] = useState<1 | 2 | 3 | 4>(3);
+  const [selectedTier, setSelectedTier] = useState<1 | 2 | 3 | 4>(
+    isConnected && rep.isRegistered ? rep.currentTier : 3
+  );
 
   const calculations = useMemo(() => {
     const amount = parseFloat(swapAmount) || 0;

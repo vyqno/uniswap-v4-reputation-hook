@@ -1,75 +1,111 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { 
-  Wallet, 
-  Shield, 
-  Clock, 
-  CheckCircle2, 
+import {
+  Wallet,
+  Shield,
+  Clock,
+  CheckCircle2,
   AlertCircle,
   ArrowRight,
   Loader2,
-  ExternalLink
+  ExternalLink,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAccount, useBalance } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { formatEther } from "viem";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FadeIn, ScaleIn } from "@/components/animations/FadeIn";
 import { TierBadge } from "@/components/common/TierBadge";
 import { REGISTRATION_BOND, TIMING, TIERS } from "@/lib/constants";
+import { useRegister, useIsRegistered } from "@/hooks/useReputation";
 import { cn } from "@/lib/utils";
 
 type RegistrationStep = "connect" | "info" | "confirm" | "pending" | "success";
 
 export default function RegisterPage() {
+  const { address, isConnected } = useAccount();
+  const { data: balance } = useBalance({ address });
+  const { data: alreadyRegistered } = useIsRegistered();
+  const { register, hash, isPending, isConfirming, isSuccess, error } = useRegister();
+
   const [step, setStep] = useState<RegistrationStep>("connect");
   const [termsAccepted, setTermsAccepted] = useState(false);
-  const [isConnecting, setIsConnecting] = useState(false);
-  const [walletAddress, setWalletAddress] = useState<string | null>(null);
-  const [walletBalance, setWalletBalance] = useState<string>("0 ETH");
 
-  const handleConnectWallet = async () => {
-    setIsConnecting(true);
-    // Simulate wallet connection (demo mode)
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Generate a random demo wallet address
-    const randomAddr = "0x" + Array.from({ length: 40 }, () => 
-      Math.floor(Math.random() * 16).toString(16)
-    ).join("");
-    const shortAddr = `${randomAddr.slice(0, 6)}...${randomAddr.slice(-4)}`;
-    
-    setWalletAddress(shortAddr);
-    setWalletBalance("1.234 ETH");
-    setIsConnecting(false);
-    setStep("info");
-  };
+  // Auto-advance steps based on wallet/tx state
+  useEffect(() => {
+    if (isConnected && step === "connect") {
+      setStep("info");
+    }
+  }, [isConnected, step]);
+
+  useEffect(() => {
+    if (isPending || isConfirming) setStep("pending");
+  }, [isPending, isConfirming]);
+
+  useEffect(() => {
+    if (isSuccess) setStep("success");
+  }, [isSuccess]);
+
+  const shortAddress = address
+    ? `${address.slice(0, 6)}...${address.slice(-4)}`
+    : null;
+
+  const formattedBalance = balance
+    ? `${parseFloat(formatEther(balance.value)).toFixed(4)} ETH`
+    : "0 ETH";
 
   const handleRegister = () => {
-    setStep("pending");
-    // Simulate transaction
-    setTimeout(() => {
-      setStep("success");
-    }, 3000);
+    register();
   };
 
   const benefits = [
     {
       icon: Shield,
       title: "Refundable Bond",
-      description: "Your 0.001 ETH bond can be withdrawn after the 30-day cooldown period.",
+      description:
+        "Your 0.001 ETH bond can be withdrawn after the 30-day cooldown period.",
     },
     {
       icon: Clock,
       title: "24-Hour Activation",
-      description: "Your reputation activates 24 hours after registration to prevent gaming.",
+      description:
+        "Your reputation activates 24 hours after registration to prevent gaming.",
     },
     {
       icon: CheckCircle2,
       title: "Keep Benefits",
-      description: "Even after withdrawing your bond, you keep your accumulated reputation.",
+      description:
+        "Even after withdrawing your bond, you keep your accumulated reputation.",
     },
   ];
+
+  // If already registered, show message
+  if (alreadyRegistered && step !== "success") {
+    return (
+      <div className="max-w-4xl mx-auto">
+        <FadeIn>
+          <div className="text-center py-16">
+            <CheckCircle2 className="h-16 w-16 text-success mx-auto mb-4" />
+            <h1 className="font-display text-4xl font-bold text-foreground mb-4">
+              Already Registered
+            </h1>
+            <p className="text-lg text-foreground-secondary mb-8">
+              Your wallet is already registered in the reputation system.
+            </p>
+            <Link to="/dashboard">
+              <Button variant="hero" size="lg">
+                Go to Dashboard
+                <ArrowRight className="h-5 w-5" />
+              </Button>
+            </Link>
+          </div>
+        </FadeIn>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -91,7 +127,7 @@ export default function RegisterPage() {
           <FadeIn delay={0.1}>
             <Card variant="glow" className="relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-brand-600/5" />
-              
+
               <div className="relative p-8">
                 {step === "connect" && (
                   <motion.div
@@ -99,7 +135,6 @@ export default function RegisterPage() {
                     animate={{ opacity: 1 }}
                     className="text-center py-8"
                   >
-                    {/* Wallet Icon */}
                     <div className="flex justify-center mb-8">
                       <div className="relative">
                         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-300/20 to-brand-600/20 flex items-center justify-center border border-brand-500/30">
@@ -113,33 +148,13 @@ export default function RegisterPage() {
                       Connect Your Wallet
                     </h3>
                     <p className="text-foreground-secondary mb-8 max-w-sm mx-auto">
-                      Connect your Ethereum wallet to register and start earning lower fees
+                      Connect your Ethereum wallet to register and start earning
+                      lower fees
                     </p>
 
-                    {/* Connect Button */}
-                    <Button
-                      variant="hero"
-                      size="xl"
-                      className="w-full mb-4"
-                      onClick={handleConnectWallet}
-                      disabled={isConnecting}
-                    >
-                      {isConnecting ? (
-                        <>
-                          <Loader2 className="h-5 w-5 animate-spin" />
-                          Connecting...
-                        </>
-                      ) : (
-                        <>
-                          <Wallet className="h-5 w-5" />
-                          Connect Wallet (Demo)
-                        </>
-                      )}
-                    </Button>
-
-                    <p className="text-xs text-foreground-tertiary">
-                      This is a demo. No real wallet connection required.
-                    </p>
+                    <div className="flex justify-center">
+                      <ConnectButton />
+                    </div>
                   </motion.div>
                 )}
 
@@ -148,30 +163,37 @@ export default function RegisterPage() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                   >
-                    {/* Animated Coin */}
                     <div className="flex justify-center mb-8">
                       <motion.div
                         animate={{ rotateY: 360 }}
-                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        transition={{
+                          duration: 3,
+                          repeat: Infinity,
+                          ease: "linear",
+                        }}
                         className="relative"
                       >
                         <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-300 to-brand-600 flex items-center justify-center shadow-glow">
-                          <span className="font-display text-3xl font-bold text-primary-foreground">Ξ</span>
+                          <span className="font-display text-3xl font-bold text-primary-foreground">
+                            E
+                          </span>
                         </div>
                         <div className="absolute inset-0 rounded-full bg-brand-500/20 blur-xl" />
                       </motion.div>
                     </div>
 
-                    {/* Bond Amount */}
                     <div className="text-center mb-8">
-                      <p className="text-foreground-secondary mb-2">Registration Bond</p>
+                      <p className="text-foreground-secondary mb-2">
+                        Registration Bond
+                      </p>
                       <p className="font-display text-4xl font-bold text-foreground">
                         {REGISTRATION_BOND.amount} ETH
                       </p>
-                      <p className="text-foreground-tertiary text-sm mt-1">≈ $3.50 USD</p>
+                      <p className="text-foreground-tertiary text-sm mt-1">
+                        Refundable after 30-day cooldown
+                      </p>
                     </div>
 
-                    {/* Benefits List */}
                     <div className="space-y-4 mb-8">
                       {benefits.map((benefit, index) => (
                         <div key={index} className="flex items-start gap-4">
@@ -179,28 +201,36 @@ export default function RegisterPage() {
                             <benefit.icon className="h-5 w-5 text-brand-500" />
                           </div>
                           <div>
-                            <h4 className="font-medium text-foreground">{benefit.title}</h4>
-                            <p className="text-sm text-foreground-tertiary">{benefit.description}</p>
+                            <h4 className="font-medium text-foreground">
+                              {benefit.title}
+                            </h4>
+                            <p className="text-sm text-foreground-tertiary">
+                              {benefit.description}
+                            </p>
                           </div>
                         </div>
                       ))}
                     </div>
 
-                    {/* Terms Checkbox */}
                     <div className="flex items-start gap-3 mb-6 p-4 rounded-lg bg-white/5">
                       <Checkbox
                         id="terms"
                         checked={termsAccepted}
-                        onCheckedChange={(checked) => setTermsAccepted(checked as boolean)}
+                        onCheckedChange={(checked) =>
+                          setTermsAccepted(checked as boolean)
+                        }
                         className="mt-1"
                       />
-                      <label htmlFor="terms" className="text-sm text-foreground-secondary cursor-pointer">
-                        I understand that my bond will be locked for 30 days before I can withdraw.
-                        I also understand that my reputation will take 24 hours to activate.
+                      <label
+                        htmlFor="terms"
+                        className="text-sm text-foreground-secondary cursor-pointer"
+                      >
+                        I understand that my bond will be locked for 30 days
+                        before I can withdraw. I also understand that my
+                        reputation will take 24 hours to activate.
                       </label>
                     </div>
 
-                    {/* Register Button */}
                     <Button
                       variant="hero"
                       size="xl"
@@ -225,24 +255,37 @@ export default function RegisterPage() {
                         Confirm Registration
                       </h3>
                       <p className="text-foreground-secondary">
-                        You are about to send {REGISTRATION_BOND.amount} ETH to register your wallet.
+                        You are about to send {REGISTRATION_BOND.amount} ETH to
+                        register your wallet.
                       </p>
                     </div>
 
                     <div className="space-y-4 mb-8 p-4 rounded-lg bg-white/5">
                       <div className="flex justify-between">
                         <span className="text-foreground-secondary">From</span>
-                        <span className="font-mono text-foreground">{walletAddress}</span>
+                        <span className="font-mono text-foreground">
+                          {shortAddress}
+                        </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-foreground-secondary">Amount</span>
-                        <span className="font-medium text-foreground">{REGISTRATION_BOND.amount} ETH</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-foreground-secondary">Estimated Gas</span>
-                        <span className="text-foreground">~0.0003 ETH</span>
+                        <span className="text-foreground-secondary">
+                          Amount
+                        </span>
+                        <span className="font-medium text-foreground">
+                          {REGISTRATION_BOND.amount} ETH
+                        </span>
                       </div>
                     </div>
+
+                    {error && (
+                      <div className="mb-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 text-destructive text-sm">
+                        {error.message.includes("InsufficientBond")
+                          ? "Insufficient ETH balance for bond"
+                          : error.message.includes("AlreadyRegistered")
+                            ? "This wallet is already registered"
+                            : "Transaction failed. Please try again."}
+                      </div>
+                    )}
 
                     <div className="flex gap-4">
                       <Button
@@ -275,14 +318,26 @@ export default function RegisterPage() {
                       <Loader2 className="h-20 w-20 text-brand-500 animate-spin" />
                     </div>
                     <h3 className="font-display text-2xl font-bold text-foreground mb-2">
-                      Processing Registration
+                      {isPending
+                        ? "Confirm in Wallet"
+                        : "Processing Registration"}
                     </h3>
                     <p className="text-foreground-secondary mb-4">
-                      Please confirm the transaction in your wallet
+                      {isPending
+                        ? "Please confirm the transaction in your wallet"
+                        : "Waiting for transaction confirmation..."}
                     </p>
-                    <p className="text-sm text-foreground-tertiary">
-                      This may take a few moments...
-                    </p>
+                    {hash && (
+                      <a
+                        href={`https://sepolia.etherscan.io/tx/${hash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 text-sm text-brand-400 hover:text-brand-300"
+                      >
+                        View on Etherscan
+                        <ExternalLink className="h-3 w-3" />
+                      </a>
+                    )}
                   </motion.div>
                 )}
 
@@ -301,20 +356,26 @@ export default function RegisterPage() {
                       Registration Successful!
                     </h3>
                     <p className="text-foreground-secondary mb-6">
-                      Your wallet is now registered. Your reputation will activate in 24 hours.
+                      Your wallet is now registered. Your reputation will
+                      activate in 24 hours.
                     </p>
 
-                    {/* Transaction Hash */}
-                    <div className="p-4 rounded-lg bg-white/5 mb-6">
-                      <p className="text-sm text-foreground-tertiary mb-1">Transaction Hash</p>
-                      <a
-                        href="#"
-                        className="inline-flex items-center gap-2 font-mono text-sm text-brand-400 hover:text-brand-300"
-                      >
-                        0x1234...abcd
-                        <ExternalLink className="h-4 w-4" />
-                      </a>
-                    </div>
+                    {hash && (
+                      <div className="p-4 rounded-lg bg-white/5 mb-6">
+                        <p className="text-sm text-foreground-tertiary mb-1">
+                          Transaction Hash
+                        </p>
+                        <a
+                          href={`https://sepolia.etherscan.io/tx/${hash}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 font-mono text-sm text-brand-400 hover:text-brand-300"
+                        >
+                          {`${hash.slice(0, 10)}...${hash.slice(-8)}`}
+                          <ExternalLink className="h-4 w-4" />
+                        </a>
+                      </div>
+                    )}
 
                     <Link to="/dashboard">
                       <Button variant="hero" size="lg" className="w-full">
@@ -340,17 +401,19 @@ export default function RegisterPage() {
                 </div>
                 <div>
                   <p className="text-sm text-foreground-tertiary">
-                    {walletAddress ? "Connected Wallet" : "Wallet Status"}
+                    {isConnected ? "Connected Wallet" : "Wallet Status"}
                   </p>
                   <p className="font-mono font-medium text-foreground">
-                    {walletAddress || "Not connected"}
+                    {shortAddress || "Not connected"}
                   </p>
                 </div>
               </div>
-              {walletAddress && (
+              {isConnected && (
                 <div className="flex items-center justify-between p-3 rounded-lg bg-white/5">
                   <span className="text-foreground-secondary">Balance</span>
-                  <span className="font-medium text-foreground">{walletBalance}</span>
+                  <span className="font-medium text-foreground">
+                    {formattedBalance}
+                  </span>
                 </div>
               )}
             </Card>
@@ -365,8 +428,12 @@ export default function RegisterPage() {
               <div className="flex items-center gap-4 mb-4">
                 <TierBadge tier={1} size="lg" />
                 <div>
-                  <p className="font-medium text-foreground">Tier 1: Starter</p>
-                  <p className="text-sm text-foreground-tertiary">0.30% fee rate</p>
+                  <p className="font-medium text-foreground">
+                    Tier 1: Starter
+                  </p>
+                  <p className="text-sm text-foreground-tertiary">
+                    0.30% fee rate
+                  </p>
                 </div>
               </div>
               <div className="space-y-2 text-sm">
@@ -391,7 +458,9 @@ export default function RegisterPage() {
             <Card variant="glass" padding="default">
               <div className="flex items-center gap-3">
                 <div className="h-3 w-3 rounded-full bg-success animate-pulse" />
-                <span className="text-foreground-secondary">Sepolia Testnet</span>
+                <span className="text-foreground-secondary">
+                  Sepolia Testnet
+                </span>
               </div>
             </Card>
           </FadeIn>

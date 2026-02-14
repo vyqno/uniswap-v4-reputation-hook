@@ -13,6 +13,8 @@ export const CONTRACTS = {
     reputationRegistry: "0xaC422CB41f699d145B463eC8D4742Fc56c4e88Fa" as const,
     reputationFeeHook: "0xb42c6cfF6FA476677cf56D88B4fD06B02E614080" as const,
     poolManager: "0xE03A1074c86CFeDd5C142C4F04F1a1536e203543" as const,
+    modifyLiquidityRouter: "0x0C478023803a644c94c4CE1C1e7b9A087e411B0A" as const,
+    swapRouter: "0xe4bd5fe7b7728c698ebdd57be9a9d1d7291f4972" as const,
     usdc: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238" as const,
     weth: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14" as const,
   },

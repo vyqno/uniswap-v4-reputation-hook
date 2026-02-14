@@ -7,16 +7,19 @@ import {
   Wallet,
   BarChart3,
   History,
+  ArrowDownUp,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Logo } from "@/components/common/Logo";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const sidebarLinks = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { name: "Swap", href: "/swap", icon: ArrowDownUp },
   { name: "Reputation", href: "/reputation", icon: Award },
   { name: "Fees", href: "/fees", icon: Calculator },
   { name: "Withdraw", href: "/withdraw", icon: Wallet },
@@ -31,6 +34,11 @@ interface AppSidebarProps {
 export function AppSidebar({ className }: AppSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const location = useLocation();
+  const { address, isConnected } = useAccount();
+
+  const shortAddress = address
+    ? `${address.slice(0, 6)}...${address.slice(-4)}`
+    : "Not connected";
 
   return (
     <motion.aside
@@ -88,21 +96,29 @@ export function AppSidebar({ className }: AppSidebarProps) {
       {/* Wallet Section */}
       <div className="border-t border-border p-4">
         {!collapsed ? (
-          <div className="rounded-xl bg-background-secondary border border-border p-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500/15">
-                <Wallet className="h-5 w-5 text-brand-600" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate">
-                  0x1234...5678
-                </p>
-                <p className="text-xs text-foreground-tertiary">
-                  Sepolia Testnet
-                </p>
+          isConnected ? (
+            <div className="rounded-xl bg-background-secondary border border-border p-4">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500/15">
+                  <Wallet className="h-5 w-5 text-brand-600" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-foreground truncate">
+                    {shortAddress}
+                  </p>
+                  <p className="text-xs text-foreground-tertiary">
+                    Sepolia Testnet
+                  </p>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <ConnectButton
+              chainStatus="none"
+              showBalance={false}
+              accountStatus="address"
+            />
+          )
         ) : (
           <div className="flex justify-center">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-500/15">

@@ -1,7 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Menu, X, Wallet } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { Logo } from "@/components/common/Logo";
 import { Button } from "@/components/ui/button";
 import { NAV_LINKS } from "@/lib/constants";
@@ -10,12 +11,6 @@ import { cn } from "@/lib/utils";
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const isAppRoute = location.pathname.startsWith("/dashboard") || 
-                     location.pathname.startsWith("/register") ||
-                     location.pathname.startsWith("/reputation") ||
-                     location.pathname.startsWith("/fees") ||
-                     location.pathname.startsWith("/withdraw") ||
-                     location.pathname.startsWith("/stats");
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50">
@@ -46,24 +41,16 @@ export function Header() {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center gap-4">
-            {isAppRoute ? (
-              <Button variant="brand" size="default">
-                <Wallet className="h-4 w-4" />
-                0x1234...5678
+            <Link to="/dashboard">
+              <Button variant="ghost" size="default">
+                Launch App
               </Button>
-            ) : (
-              <>
-                <Link to="/dashboard">
-                  <Button variant="ghost" size="default">
-                    Launch App
-                  </Button>
-                </Link>
-                <Button variant="brand" size="default">
-                  <Wallet className="h-4 w-4" />
-                  Connect Wallet
-                </Button>
-              </>
-            )}
+            </Link>
+            <ConnectButton
+              chainStatus="icon"
+              showBalance={false}
+              accountStatus="address"
+            />
           </div>
 
           {/* Mobile Menu Button */}
@@ -115,10 +102,13 @@ export function Header() {
                 Launch App
               </Button>
             </Link>
-            <Button variant="brand" className="w-full">
-              <Wallet className="h-4 w-4" />
-              Connect Wallet
-            </Button>
+            <div className="flex justify-center">
+              <ConnectButton
+                chainStatus="icon"
+                showBalance={false}
+                accountStatus="address"
+              />
+            </div>
           </div>
         </div>
       </motion.div>
